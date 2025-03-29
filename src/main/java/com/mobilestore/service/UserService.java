@@ -3,12 +3,11 @@ package com.mobilestore.service;
 import com.mobilestore.entity.User;
 import com.mobilestore.exception.ResourceNotFoundException;
 import com.mobilestore.exception.DuplicateResourceException;
+import com.mobilestore.exception.InvalidPasswordException;
 import com.mobilestore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -24,7 +23,7 @@ public class UserService {
 
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new DuplicateResourceException("Username '" + username + "' already exists."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with: " + username));
     }
 
     public User registerUser(User user) {
@@ -36,11 +35,10 @@ public class UserService {
     }
 
     public boolean authenticateUser(String username, String rawPassword) {
-        Optional<User> userOpt = userRepository.findByUsername(username);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            return passwordEncoder.matches(rawPassword, user.getPassword());
+        User user = getUserByUsername(username);
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new InvalidPasswordException("Invalid password");
         }
-        return false;
+        return true;
     }
 }
