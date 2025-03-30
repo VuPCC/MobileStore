@@ -34,11 +34,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public boolean authenticateUser(String username, String rawPassword) {
+    public void authenticateUser(String username, String rawPassword) {
         User user = getUserByUsername(username);
         if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
             throw new InvalidPasswordException("Invalid password");
         }
-        return true;
     }
 }

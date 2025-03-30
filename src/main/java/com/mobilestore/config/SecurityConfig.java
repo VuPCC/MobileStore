@@ -13,9 +13,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Cách mới để vô hiệu hóa CSRF
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll() // Cho phép truy cập API auth mà không cần xác thực
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

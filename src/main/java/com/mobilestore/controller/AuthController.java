@@ -1,5 +1,6 @@
 package com.mobilestore.controller;
 
+import com.mobilestore.dto.LoginRequest;
 import com.mobilestore.entity.User;
 import com.mobilestore.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestParam("username") String username, @RequestParam("password") String password) {
-        userService.authenticateUser(username, password);
+    public ResponseEntity<String> authenticateUser(@RequestBody LoginRequest request) {
+        userService.authenticateUser(request.getUsername(), request.getPassword());
         return ResponseEntity.ok("Login success");
     }
 }
