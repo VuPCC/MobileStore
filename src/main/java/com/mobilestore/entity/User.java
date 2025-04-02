@@ -23,9 +23,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Roles roles;
 
-    public enum Role {
+    public enum Roles {
         CUSTOMER, ADMIN
     }
 }

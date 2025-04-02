@@ -43,7 +43,7 @@ public class JwtUtils {
                 .getSubject();
     }
 
-    public String extractRole(String token) {
+    public List<String> extractRoles(String token) {
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         return Jwts.parser()
@@ -51,13 +51,15 @@ public class JwtUtils {
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .get("role", String.class);
+                .get("roles", List.class);
     }
 
     public boolean validateToken(String token) {
+        Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+
         try {
             Jwts.parser()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token);
             return true;
