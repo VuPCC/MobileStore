@@ -1,7 +1,5 @@
-package com.mobilestore.config;
+package com.mobilestore.security;
 
-import com.mobilestore.security.JwtAuthenticationFilter;
-import com.mobilestore.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
